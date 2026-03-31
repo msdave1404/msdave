@@ -6,10 +6,12 @@
 
 *   **🔒 Secure Access**: Simplified administrative dashboard with session management.
 *   **📂 Equipment Inventory**: Comprehensive lifecycle tracking (Device Specs, Dept, Manufacturer, Voltage/Battery Specs).
-*   **📋 Dynamic Inspection Workflows**:
-    *   Template-based checklists per device type (Ventilators, Monitors, etc.).
-    *   **Unit-Level Customization**: Add or remove specific tests on-the-fly for unique units.
+*   **📋 Dual Inspection Workflows**:
+    *   **Manual Mode**: Form-based entry with dynamic, session-level checklist customization (add/remove tests on-the-fly).
+    *   **Automated Mode (IoT Simulation)**: Simulated hardware interface for ECG, Ventilators, and Monitors via virtual MQTT/Bluetooth/Serial protocols.
+*   **🔌 IoT Connectivity Hub**: Sidebar-based device manager to link and track virtual hardware sources with secure handshake simulation.
 *   **📜 History & Analytics**: Full audit trail of past inspections with "Device Health Score" calculations.
+
 *   **📄 Professional PDF Reporting**: Generates industry-standard job cards (including Serial No, Job Card IDs, and Technician sign-offs) using WeasyPrint.
 *   **🐳 Production Ready**: Fully containerized with Docker and Docker Compose for easy deployment.
 

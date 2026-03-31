@@ -26,9 +26,19 @@ The application follows a modular architecture:
 
 ## ✨ Core Modules & Functionality
 1.  **Equipment Management**: Manage the full lifecycle of medical devices including Manufacturer details, Operating Voltages, and Default Checklist templates.
-2.  **Dynamic Inspection**: The "heart" of the system where users can add/remove field-specific tests (e.g., adding an extra "Leak Test" for a specific Ventilator unit).
-3.  **Health Dashboard**: Visualizing the "Health Score" (Pass/Total) of a device unit across time.
-4.  **Audit Logs & Reports**: A complete history of past inspections with one-click PDF generation.
+2.  **Manual Inspection**: A form-based workflow for on-site technicians with dynamic, session-based checklist customization (add/remove tests per unit).
+3.  **Automated Testing Mode (IoT Simulation)**: 
+    *   **Connectivity Hub**: Link virtual IoT devices via protocols like MQTT, Bluetooth, and Serial/USB.
+    *   **Real-time Handshake**: Simulates secure authentication and calibration data sync with hardware.
+    *   **Automated Diagnostics**: Runs predefined test suites for ECG, Ventilators, and Monitors with live progress tracking and automated pass/fail results.
+4.  **Health Dashboard**: Visualizing the "Health Score" (Pass/Total) of a device unit across time.
+5.  **Audit Logs & Reports**: A complete history of past inspections with one-click PDF generation.
+
+## 🔌 Advanced Features
+*   **IoT Device Linking**: A sidebar-based connection manager to simulate and manage external data sources.
+*   **Modular Hardware Interface**: Built using a clean abstraction layer (`MedicalDeviceInterface`) to allow for future integration with real physical hardware.
+*   **Dynamic Checklist Logic**: Ensures that while devices have "standard" tests, unique unit-level requirements are handled seamlessly without cluttering the main database schema.
+
 
 ## 🚀 Future Roadmap
 *   **Barcode/QR Integration**: Scan a sticker on the machine to open the inspection form instantly.
