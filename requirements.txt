@@ -2,4 +2,3 @@ streamlit
 pandas
 weasyprint
 jinja2
-sqlite3
