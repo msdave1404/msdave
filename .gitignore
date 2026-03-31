@@ -48,8 +48,14 @@ coverage.xml
 *.cover
 *.py.cover
 .hypothesis/
-.pytest_cache/
-cover/
+.nox/
+.tox/
+
+# Professional Databases
+*.db
+*.sqlite3
+*.db-journal
+*.sqlite
 
 # Translations
 *.mo

@@ -5,13 +5,10 @@ import os
 DB_PATH = "data/app.db"
 
 def init_db():
-    if not os.path.exists("data"):
-        os.makedirs("data")
-    
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
     cursor = conn.cursor()
     
-    # Equipment table
+    # Create tables
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS equipment (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,11 +19,23 @@ def init_db():
             manufacturer TEXT,
             operating_voltage TEXT,
             battery_spec TEXT,
-            checklist_fields TEXT -- JSON list of checklist items specific to this device
+            checklist_fields TEXT
         )
     ''')
-    
-    # Inspections table
+
+    # Seed Default Data if table is empty
+    cursor.execute("SELECT COUNT(*) FROM equipment")
+    if cursor.fetchone()[0] == 0:
+        default_devices = [
+            ("ECG Machine", "MAC-2000", "Cardiology", "2024-01-01", "GE Healthcare", "230V", "Li-ion 14.4V", '["Power-On Self Test", "Lead-Off Detection", "Baseline Stability", "Common Mode Rejection", "Heart Rate Accuracy"]'),
+            ("Ventilator", "Puritan Bennett 980", "ICU", "2024-01-01", "Medtronic", "230V", "Backup Lead-Acid", '["Oxygen Supply Pressure", "Air Supply Pressure", "Exhalation Valve Test", "Safety Valve Test", "Battery Backup Test"]'),
+            ("Patient Monitor", "IntelliVue MX550", "ER", "2024-01-01", "Philips", "230V", "Rechargeable Li-ion", '["Display Pixel Test", "NIBP Pump Test", "SpO2 Module Sync", "Temperature Probe Continuity", "Alarm System Audio"]')
+        ]
+        cursor.executemany('''
+            INSERT INTO equipment (device_name, model_number, department, purchase_date, manufacturer, operating_voltage, battery_spec, checklist_fields)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', default_devices)
+        
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS inspections (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
