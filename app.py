@@ -2,7 +2,8 @@ import streamlit as st
 from database import init_db
 from modules.auth import login_page, logout
 from modules.equipment import equipment_management
-from modules.inspection import inspection_module
+from modules.manual_inspection import inspection_module as manual_inspection
+from modules.automated_inspection import automated_inspection
 from modules.history import inspection_history
 
 # Initialize DB on start
@@ -22,7 +23,7 @@ else:
     st.sidebar.write("Navigate through modules")
     
     page = st.sidebar.radio("Go to", 
-        ["Equipment Management", "New Inspection", "Inspection History"]
+        ["Equipment Management", "Manual Inspection", "Automated Testing", "Inspection History"]
     )
     
     st.sidebar.divider()
@@ -32,7 +33,10 @@ else:
     # Page Routing
     if page == "Equipment Management":
         equipment_management()
-    elif page == "New Inspection":
-        inspection_module()
+    elif page == "Manual Inspection":
+        manual_inspection()
+    elif page == "Automated Testing":
+        automated_inspection()
     elif page == "Inspection History":
         inspection_history()
+
