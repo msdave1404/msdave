@@ -18,7 +18,11 @@ def init_db():
             device_name TEXT NOT NULL,
             model_number TEXT,
             department TEXT,
-            purchase_date DATE
+            purchase_date DATE,
+            manufacturer TEXT,
+            operating_voltage TEXT,
+            battery_spec TEXT,
+            checklist_fields TEXT -- JSON list of checklist items specific to this device
         )
     ''')
     
@@ -31,9 +35,34 @@ def init_db():
             remarks TEXT,
             inspected_by TEXT,
             date DATE,
+            serial_number TEXT,
+            job_card_no TEXT,
+            technician TEXT,
+            visual_inspection TEXT, -- JSON
+            operational_test TEXT, -- JSON
+            self_test TEXT, -- JSON
+            settings_check TEXT, -- JSON
             FOREIGN KEY (device_id) REFERENCES equipment (id)
         )
     ''')
+
+    # Seed initial data from Machine.md if empty
+    cursor.execute("SELECT COUNT(*) FROM equipment")
+    if cursor.fetchone()[0] == 0:
+        sample_devices = [
+            ("Ventilator", "V-100", "ICU", "2023-01-01", "Philips", "230V", "12V, 7Ah", 
+             json.dumps(["Oxygen Supply Check", "Air Supply Check", "Leak Test", "Software & Firmware Check"])),
+            ("Ultrasound", "US-200", "Radiology", "2023-05-10", "GE", "230V", "N/A", 
+             json.dumps(["System Boot & UI Test", "Probe Holder Board", "Image Quality Test", "DC-DC Board", "Data Storage & Connectivity", "Audio Check and keyboard test"])),
+            ("Patient Monitor", "PM-50", "General Ward", "2024-02-15", "Mindray", "230V", "12V, 2.3Ah", 
+             json.dumps(["System Boot & UI Test", "Data Storage & Connectivity", "ECG Test", "SpO2 Test", "NIBP Test", "Temperature Test"])),
+            ("Defibrillator", "HeartStart XL", "Emergency", "2024-06-28", "Philips", "230V", "12V, 2.3Ah", 
+             json.dumps(["Power supply check", "Calibration status", "Physical condition", "Display working", "Alarm system"]))
+        ]
+        cursor.executemany('''
+            INSERT INTO equipment (device_name, model_number, department, purchase_date, manufacturer, operating_voltage, battery_spec, checklist_fields)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', sample_devices)
     
     conn.commit()
     conn.close()
