@@ -57,6 +57,9 @@ coverage.xml
 *.db-journal
 *.sqlite
 
+# Local data volume for Docker
+data/
+
 # Translations
 *.mo
 *.pot
