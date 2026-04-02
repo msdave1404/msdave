@@ -11,6 +11,22 @@ init_db()
 
 st.set_page_config(page_title="Biomed-Inspection System", page_icon="🏥", layout="wide")
 
+# Custom CSS for Enterprise Look
+st.markdown("""
+    <style>
+    /* Hide Streamlit Branding (Viewer Mode) */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    .stAppDeployButton {display:none;}
+    img[data-testid="stLogo"] {visibility: hidden;}
+    
+    .main {
+        background-color: #f8f9fa;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # Session state for auth
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
